@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHORCADO</title>
+    <link rel="icon" href="imagenes/9.jpg" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sección del video de presentación -->
+        <div id="video-section">
+            <center>
+                <div class="cartel">
+                    <span>M</span>
+                    <span>a</span>
+                    <span>x </span>
+                    <span>-</span>
+                    <span>G</span>
+                    <span>a</span>
+                    <span>m</span>
+                    <span>e</span>
+                </div>
+            </center>
+            <br>
+            <video id="intro-video"  width="600" controls autoplay muted loop>
+                <source src="video/presentacion4.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
+            <a href="#" id="start-button">Comenzar</a>
+        </div>
+
+        <!-- Sección de inicio del juego -->
+        <div id="start-section" style="display: none;">
+            <center>
+                <div class="titulo1">
+                    <span>E</span>
+                    <span>l</span>
+                    <span>_</span>
+                    <span>A </span>
+                    <span>h</span>
+                    <span>o</span>
+                    <span>r</span>
+                    <span>c</span>
+                    <span>a</span>
+                    <span>d</span>
+                    <span>o</span>
+                </div>
+            </center>
+            <center>
+                <div class="titulo2">
+                    <span>M</span>
+                    <span>x</span>
+                    <br>
+                    <span>2 </span>
+                    <span>.</span>
+                    <span>0</span>
+                </div>
+            </center>
+            <video id="intro-video2" width="350" controls autoplay muted loop>
+                <source src="video/carga.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
+            <br>
+            <input type="password" id="word-input" placeholder="Escribe una o dos palabra(sin numeros, ni simbolos)" maxlength="50" autocomplete="off">
+            <br>
+            <br>
+            <button id="start-btn">Comenzar Juego</button>
+            <button id="random-btn">Palabra Random</button>
+            <p id="warning-message" class="warning-message"></p> <!-- Mensaje de advertencia -->
+        </div>
+
+        <!-- Sección del juego -->
+        <div id="game-section" style="display: none;">
+            <center>
+                <div class="titulo3">
+                    <span>E</span>
+                    <span>l</span>
+                    <span>~</span>
+                    <span>A </span>
+                    <span>h</span>
+                    <span>o</span>
+                    <span>r</span>
+                    <span>c</span>
+                    <span>a</span>
+                    <span>d</span>
+                    <span>o</span>
+                </div>
+            </center>
+            <pre id="hangman-text"></pre>
+            <div id="word"></div>
+            <div id="keyboard"></div>
+            <p id="message"></p>
+            <div class="button-container">
+                <button id="restart-btn">Reiniciar Juego</button>
+                <button id="sound-toggle-btn">Reproducir Sonido</button>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>  
+                <p id="modal-message"></p>
+                <video id="modal-video" width="100%" autoplay muted loop >
+                    <source src="" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
+                <button class="canvas-confetti-btn">
+                    🎉
+                    <span class="tool-tip">TOCAME!</span>
+                </button>
+                <br>
+                <center><button id="restart-btn2">Reiniciar Juego</button></center>
+                <audio id="win-sound" src="Sonido/victoria/victoria.mp4" preload="auto"></audio>
+                <audio id="lose-sound" src="Sonido/risas2/risas2.MP3" preload="auto"></audio>
+            </div>
+        </div>
+
+        <!-- Elementos de sonido generales -->
+        <audio id="click-sound" src="Sonido/click.mp3" preload="auto"></audio>
+        <audio id="restart-sound" src="Sonido/restart.mp3" preload="auto"></audio>
+        <audio id="key-sound" src="Sonido/key.mp3" preload="auto"></audio>
+        <audio id="background-sound" src="Sonido/background.mp3" preload="auto" loop></audio>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,809 @@
+
+
+
+
+
+
+/* Importa la fuente desde Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;700&display=swap");
+
+/* Estilos generales */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Outfit', sans-serif;
+    background-color: #d382df;
+    background-image: url('imagenes/sangre1.png'); /* Ruta a tu imagen de fondo */
+    background-size: cover; /* Asegura que la imagen cubra todo el contenedor */
+    background-position: center; /* Centra la imagen en la pantalla */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+/* Estilos para el contenedor */
+.container {
+    text-align: center; /* Centrar el texto dentro del contenedor */
+    background: #0a0a0a; /* Fondo blanco para el contenedor */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(186, 29, 29, 0.1); /* Sombra sutil */
+    padding: 10px;
+    max-width: 1000px;
+    width: 100%;
+    border: 12px solid #ee4f4f; /* Opcional, para un borde alrededor del video */
+    border-radius: 18px; /* Opcional, para bordes redondeados */
+}
+
+/* Estilos del video */
+#video-section {
+    margin-bottom: 20px;
+    overflow: hidden; /* Evita que aparezcan barras de desplazamiento */
+}
+
+#intro-video {
+ width: 100%;
+ max-width: 600px; /* Limita el ancho máximo del video */
+    display: block;
+    margin: auto;
+ 
+}
+
+/* Estilos de los botones */
+button {
+    background: linear-gradient(45deg, rgba(254, 10, 214, 2), rgba(65, 199, 208, 0.5));
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Estilo específico para el botón de comenzar juego */
+#start-btn {
+    background-color: #2196F3; /* Color azul para el botón de comenzar juego */
+
+  
+}
+
+#restart-btn {
+    background-color: #f44336; /* Color rojo para el botón de reiniciar juego */
+  
+  
+}
+
+/* Estilo del botón en hover */
+button:hover {
+    background-color: #45a049; /* Verde más oscuro */
+    transform: scale(1.05);
+}
+
+/* Estilo del botón en hover específico */
+#start-btn:hover {
+    background-color: #1e88e5; /* Azul más oscuro */
+}
+
+#restart-btn:hover {
+    background-color: #d32f2f; /* Rojo más oscuro */
+}
+
+/* Estilo del botón en clic */
+button:active {
+    transform: scale(0.95);
+}
+
+/* Estilos específicos para el botón de confeti */
+.canvas-confetti-btn {
+    font-size: 1.5rem;
+    border: none;
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    cursor: pointer;
+    position:absolute;
+    left: 0.1%; /* Alinea el botón al borde izquierdo del contenedor */
+    top: 55%; /* Ajusta la distancia desde el borde superior del contenedor */
+    padding: 0.5rem 0.5rem;
+    border-radius: 8px; /* Bordes redondeados */
+    outline: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.canvas-confetti-btn:hover {
+    background-color: #0056b3; /* Color al pasar el mouse */
+    transform: scale(1.1); /* Efecto de escala al pasar el mouse */
+}
+
+.tool-tip {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    color: #000;
+    font-weight: 400;
+    padding: 5px;
+    border-radius: 4px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+}
+
+.canvas-confetti-btn:hover .tool-tip {
+    opacity: 1;
+}
+
+/* Estilo del modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Fijo en pantalla */
+    z-index: 1; /* En la parte superior */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Hacer que la página se desplace si el contenido es más grande */
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo negro con opacidad */
+}
+
+.modal-content {
+    background-color: #2b1728;
+    margin: 15% auto; /* Centrar modal */
+    padding: 20px;
+    border: 1px solid #560c4a;
+    width: 80%; /* Ancho del modal */
+
+
+    max-width: 800px; /* Ancho máximo del modal */
+    position: relative;
+}
+
+#modal-video {
+    width: 55%; /* Ocupa todo el ancho del modal */
+    height: auto; /* Ajusta la altura automáticamente para mantener la relación de aspecto */
+    display: block; /* Asegura que el video sea un bloque para ocupar toda el área disponible */
+    margin: 0 auto; /* Centra el video horizontalmente */
+}
+
+
+
+
+.close {
+    display: none; /* Ocultar el botón de cierre */
+    color: #f9f6f6;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(249, 244, 244);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-message {
+    color: white; /* Cambiar el color del mensaje */
+    font-size: 2.5em; /* Ajustar el tamaño del texto si es necesario */
+}
+
+/* Animaciones */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes celebrate-animation {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes move {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes colorChange {
+    0% {
+        color: rgb(125, 43, 43); /* Color inicial */
+    }
+    50% {
+        color: rgb(0, 204, 255); /* Color intermedio */
+    }
+    100% {
+        color: rgb(125, 43, 43); /* Color final */
+    }
+}
+
+@keyframes moveBackground {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-100%, -100%);
+    }
+}
+
+#game-section {
+    text-align: center; /* Centra todo el contenido horizontalmente */
+}
+
+/* Estilos adicionales del dibujo */
+#hangman-text {   
+    font-family: monospace; /* Asegura que el texto se muestre con una fuente de ancho fijo */
+    color: white; /* Color del texto blanco */
+    
+    font-size: 0.5em; /* Tamaño del texto */
+    
+    white-space: pre; /* Mantiene el formato del texto con espacios y saltos de línea */
+
+}
+
+#sound-controls {
+    margin-top: 20px;
+}
+
+#sound-controls button {
+    background-color: #4CAF50; /* Verde para el botón de reproducción */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#sound-controls button:hover {
+    background-color: #45a049; /* Verde más oscuro en hover */
+}
+
+#sound-controls button:active {
+    transform: scale(0.95); /* Efecto de clic */
+}
+
+.titulo1 {
+    width: 250px; /* Ancho del cartel */
+    height: 50px; /* Altura del cartel */
+   
+    background-size: cover; /* Asegura que la imagen cubra todo el área del cartel */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    color: rgb(244, 236, 236);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    font-size: 36px; /* Tamaño de la fuente */
+    text-align: center;
+    padding: 20px;
+    z-index: 1; /* Asegura que el texto esté por encima de cualquier otro elemento */
+}
+
+
+.titulo1 span {
+    display: inline-block;
+    opacity: 1; /* Asegura que el texto siempre sea visible */
+    animation: appear 0.95s ease forwards,move 1s ease-in-out infinite,colorChange 2s ease-in-out infinite; /* Animación para aparecer */
+}
+
+.titulo1 span:nth-child(1) { animation-delay: 0s, 0s, 0s; }
+.titulo1 span:nth-child(2) { animation-delay: 0.1s, 0.1s, 0.1s; }
+.titulo1 span:nth-child(3) { animation-delay: 0.2s, 0.2s, 0.2s; }
+.titulo1 span:nth-child(4) { animation-delay: 0.3s, 0.3s, 0.3s; }
+.titulo1 span:nth-child(5) { animation-delay: 0.4s, 0.4s, 0.4s; }
+.titulo1 span:nth-child(6) { animation-delay: 0.5s, 0.5s, 0.5s; }
+.titulo1 span:nth-child(7) { animation-delay: 0.6s, 0.6s, 0.6s; }
+.titulo1 span:nth-child(8) { animation-delay: 0.7s, 0.7s, 0.7s; }
+.titulo1 span:nth-child(9) { animation-delay: 0.8s, 0.8s, 0.8s; }
+.titulo1 span:nth-child(10) { animation-delay: 0.9s, 0.9s, 0.9s; }
+
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes move {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes colorChange {
+    0% {
+        color: rgb(125, 43, 43); /* Color inicial */
+    }
+    50% {
+        color: rgb(0, 204, 255); /* Color intermedio */
+    }
+    100% {
+        color: rgb(125, 43, 43); /* Color final */
+    }
+}
+
+
+
+.titulo2 {
+    width: 250px; /* Ancho del cartel */
+    height: 50px; /* Altura del cartel */
+   
+    background-size: cover; /* Asegura que la imagen cubra todo el área del cartel */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    color: rgb(244, 236, 236);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    font-size: 36px; /* Tamaño de la fuente */
+    text-align: center;
+    padding: 20px;
+    z-index: 1; /* Asegura que el texto esté por encima de cualquier otro elemento */
+}
+
+
+.titulo2 span {
+    display: inline-block;
+    opacity: 1; /* Asegura que el texto siempre sea visible */
+    animation: appear 0.95s ease forwards,move 1s ease-in-out infinite,colorChange 2s ease-in-out infinite; /* Animación para aparecer */
+}
+
+.titulo2 span:nth-child(1) { animation-delay: 0s, 0s, 0s; }
+.titulo2 span:nth-child(2) { animation-delay: 0.1s, 0.1s, 0.1s; }
+.titulo2 span:nth-child(3) { animation-delay: 0.2s, 0.2s, 0.2s; }
+.titulo2 span:nth-child(4) { animation-delay: 0.3s, 0.3s, 0.3s; }
+.titulo2 span:nth-child(5) { animation-delay: 0.4s, 0.4s, 0.4s; }
+.titulo2 span:nth-child(6) { animation-delay: 0.5s, 0.5s, 0.5s; }
+.titulo2 span:nth-child(7) { animation-delay: 0.6s, 0.6s, 0.6s; }
+.titulo2 span:nth-child(8) { animation-delay: 0.7s, 0.7s, 0.7s; }
+.titulo2 span:nth-child(9) { animation-delay: 0.8s, 0.8s, 0.8s; }
+.titulo2 span:nth-child(10) { animation-delay: 0.9s, 0.9s, 0.9s; }
+
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes move {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes colorChange {
+    0% {
+        color: rgb(125, 43, 43); /* Color inicial */
+    }
+    50% {
+        color: rgb(0, 204, 255); /* Color intermedio */
+    }
+    100% {
+        color: rgb(125, 43, 43); /* Color final */
+    }
+}
+.titulo3 {
+    width: 280px; /* Ancho del cartel */
+    height: 150px; /* Altura del cartel */
+    background-image: url('imagenes/10.png'); /* Ruta a tu imagen de fondo */
+    background-size: cover; /* Asegura que la imagen cubra todo el área del cartel */
+    background-position: center ; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    color: rgb(244, 236, 236);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    font-size: 30px; /* Tamaño de la fuente */
+    text-align: center;
+    padding: 0px;
+
+    z-index: 1; /* Asegura que el texto esté por encima de cualquier otro elemento */
+}
+
+.titulo3::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, rgba(199, 91, 199, 0.5), rgba(11, 2, 1, 0.5));
+    animation: moveBackground 5s linear infinite;
+    z-index: 0; /* Coloca el gradiente por debajo del texto */
+}
+
+.titulo3 span {
+    display: inline-block;
+    opacity: 1; /* Asegura que el texto siempre sea visible */
+    animation: appear 0.95s ease forwards,move 1s ease-in-out infinite,colorChange 2s ease-in-out infinite; /* Animación para aparecer */
+}
+
+.titulo3 span:nth-child(1) { animation-delay: 0s, 0s, 0s; }
+.titulo3 span:nth-child(2) { animation-delay: 0.1s, 0.1s, 0.1s; }
+.titulo3 span:nth-child(3) { animation-delay: 0.2s, 0.2s, 0.2s; }
+.titulo3 span:nth-child(4) { animation-delay: 0.3s, 0.3s, 0.3s; }
+.titulo3 span:nth-child(5) { animation-delay: 0.4s, 0.4s, 0.4s; }
+.titulo3 span:nth-child(6) { animation-delay: 0.5s, 0.5s, 0.5s; }
+.titulo3 span:nth-child(7) { animation-delay: 0.6s, 0.6s, 0.6s; }
+.titulo3 span:nth-child(8) { animation-delay: 0.7s, 0.7s, 0.7s; }
+.titulo3 span:nth-child(9) { animation-delay: 0.8s, 0.8s, 0.8s; }
+.titulo3 span:nth-child(10) { animation-delay: 0.9s, 0.9s, 0.9s; }
+
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes move {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes colorChange {
+    0% {
+        color: rgb(125, 43, 43); /* Color inicial */
+    }
+    50% {
+        color: rgb(0, 204, 255); /* Color intermedio */
+    }
+    100% {
+        color: rgb(125, 43, 43); /* Color final */
+    }
+}
+
+
+
+
+
+@keyframes moveBackground {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-100%, -100%);
+    }
+}
+
+#hangman-text {
+    font-family: monospace; /* Asegura que el texto se muestre con una fuente de ancho fijo */
+    color: #171515; /* Color del texto por defecto */
+    font-size: 1em; /* Tamaño del texto */
+    white-space: pre; /* Mantiene el formato del texto con espacios y saltos de línea */
+}
+
+
+
+
+/* Clase de animación para el mensaje de ganar */
+#message.message-win {
+    font-size: 0.5em; /* Tamaño grande para el mensaje de victoria */
+    font-weight: bold; /* Negrita para el mensaje de victoria */
+    color: #60ef65; /* Color verde */
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* Fuente divertida */
+    animation: celebration 10s ease-in-out; /* Animación de celebración */
+    margin: 20px;
+}
+
+#message.message-lose {
+    font-size: 0.3em; /* Tamaño grande para el mensaje de derrota */
+    font-weight: bold; /* Negrita para el mensaje de derrota */
+    color: #f44336; /* Color rojo */
+    font-family:Georgia, 'Times New Roman', Times, serif; /* Fuente estándar */
+    margin: 20px;
+}
+
+
+
+/* Animación de rebote */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Animación de desvanecimiento */
+.show {
+    opacity: 1;
+}
+
+/* Estilo del campo de entrada de texto */
+#word-input {
+    text-align: center;
+    font-size: 8.8px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 240PX; /* Ajusta el tamaño del campo */
+}
+
+
+/* Asegúrate de añadir estos estilos a tu archivo CSS */
+
+#word {
+    font-size: 2em;
+    text-align: center;
+    margin: 20px 0;
+    color: whitesmoke;
+}
+
+#keyboard {
+    text-align: center;
+    margin: 1px 0;
+}
+
+#message {
+    font-size: 1em;
+    text-align: center;
+    margin: 20px 0;
+}
+
+#warning-message {
+    color: red;
+    text-align: center;
+    
+    display: none;
+}
+
+.celebrate {
+    animation: celebrate-animation 2s;
+}
+
+@keyframes celebrate-animation {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 20px; /* Espacio superior para separar los botones del contenido superior */
+}
+
+/* Estilos opcionales para los botones */
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+
+.button-container {
+    display: flex; /* Utiliza Flexbox para alinear los botones */
+    justify-content: flex-start; /* Alinea los botones al inicio del contenedor (a la izquierda) */
+    gap: 10px; /* Espacio entre los botones */
+    margin: 20px; /* Margen opcional para separar del contenido */
+}
+
+/* Estilo de los botones si es necesario */
+#restart-btn, #sound-toggle-btn {
+    padding: 10px 20px; /* Ajusta el relleno de los botones */
+    font-size: 16px; /* Tamaño de fuente para los botones */
+}
+
+#intro-video2 {
+    display: block;
+    margin: 0 auto; /* Centra el video horizontalmente */
+    width:230px;
+    height: AUTO;
+}
+
+
+
+/* Estilos para el teclado */
+/* Contenedor del teclado */
+.keyboard {
+    display: grid; /* Usa grid para el diseño */
+    grid-template-columns: repeat(10, 1fr); /* 10 columnas */
+    grid-template-rows: repeat(3, auto); /* 3 filas */
+    gap: 0.5px; /* Espacio entre las teclas */
+    justify-items: center; /* Centra las teclas dentro de las celdas */
+    margin-top: 5px;
+}
+
+
+/* Estilo de las teclas */
+.key {
+    background-color: #f763f7; /* Color de fondo de las teclas */
+    border: 2px solid #f7f6f6; /* Borde de las teclas */
+    color: white;
+    padding: 8px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    font-size: 0.7rem; /* Tamaño de la fuente en las teclas */
+    min-width: 0px; /* Ajuste del ancho mínimo para las teclas, asegurando que no sean demasiado pequeñas */
+    min-height: 0px; /* Ajuste del alto mínimo para las teclas, asegurando que tengan una forma más uniforme */
+}
+
+
+
+/* Ajustes específicos para teclas si es necesario */
+.key:hover {
+    background-color: #070707; /* Color de fondo de las teclas al pasar el mouse */
+    border: 2px solid #ffffff; /* Mantener el borde blanco */
+    transform: scale(1.1); /* Efecto de escala al pasar el mouse */
+    color: white; /* Mantener el color del texto blanco */
+}
+
+.key:active {
+    background-color: #0e226d; /* Color de fondo de las teclas al hacer clic */
+    transform: scale(1.1); /* Efecto de escala al hacer clic */
+}
+.key.off {
+    background-color: #010101; /* Color más oscuro para indicar desactivado */
+    border: 2px solid #ffffff; /* Borde blanco para mantener la consistencia */
+    cursor: not-allowed; /* Cursor de no permitido */
+    pointer-events: none; /* Desactivar eventos de clic */
+    opacity: 0.6; /* Hacer el botón menos visible */
+    color: #cccccc; /* Color del texto más claro para mejorar el contraste */
+}
+
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .keyboard {
+        grid-template-columns: repeat(5, 1fr); /* 5 columnas en pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .keyboard {
+        grid-template-columns: repeat(4, 1fr); /* 4 columnas en pantallas aún más pequeñas */
+    }
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+ 
+  body {
+    background: url('./bg.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+  }
+ 
+  a {
+    text-decoration: none;
+    color: rgb(233, 195, 241);
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(202, 17, 17);
+    padding: 10px 5px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    text-transform: uppercase;
+    border-radius: 50%;
+    border-color: rgb(113, 33, 33);
+    border: 2px solid rgb(114, 187, 213); /* Cambiado aquí */
+    font-size: 12px; /* Ajusta el tamaño de la fuente aquí */
+    animation: animacion 2s linear infinite;
+  }
+ 
+ @keyframes animacion {
+   0% {
+     box-shadow: 0 0 0 0 rgba(222, 16, 16, 0.6),  0 0 0 0 rgba(162, 51, 142, 0.6);
+   }
+ 
+   30% {
+     box-shadow: 0 0 0 100px rgba(29, 171, 209, 0), 0 0 0 0 rgba(108, 219, 35, 0.6);
+   }
+ 
+   65% {
+     box-shadow: 0 0 0 100px rgba(29, 171, 209, 0), 0 0 0 30px rgba(29, 171, 209, 0);
+   }
+ 
+   100% {
+     box-shadow: 0 0 0 0 rgba(29, 171, 209, 0),  0 0 0 30px rgba(29, 171, 209, 0);
+   }
+ 
+ 
+}
+
+ 
+
+
