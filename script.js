@@ -234,7 +234,7 @@ function initializeGame() {
     if (!isValidWord(selectedWord)) {
         const warningMessage = document.getElementById('warning-message');
         if (warningMessage) {
-            warningMessage.textContent = 'Por favor, ingresa solo una o dos palabras (sin números ni símbolos).';
+            warningMessage.textContent = 'Por favor, ingresa de una a tres palabras (sin números ni símbolos)';
             warningMessage.style.display = 'block'; // Mostrar el mensaje de advertencia
         }
         return;
@@ -275,7 +275,7 @@ function initializeGame() {
 function isValidWord(word) {
     // Acepta solo palabras sin números ni símbolos
     const regex = /^[A-Z\s]+$/; // Solo letras y espacios
-    return regex.test(word) && word.split(' ').length <= 2; // Permitir una o dos palabras
+    return regex.test(word) && word.split(' ').length <= 3; // Permitir una o dos palabras
 }
 
 function resetGame() {
@@ -434,7 +434,7 @@ function showModal(result) {
 }
 
 // Event listener para el botón de cierre del modal
-closeBtn.addEventListener('click', function() {
+closeBtn.addEventListener('click', function () {
     modal.style.display = 'none';
     modalVideo.pause(); // Pausar el video al cerrar el modal
     modalVideo.src = ''; // Limpiar la fuente del video para evitar que se reproduzca al volver a abrir el modal
@@ -448,7 +448,7 @@ closeBtn.addEventListener('click', function() {
 });
 
 // Event listener para hacer clic fuera del modal para cerrarlo
-window.addEventListener('click', function(event) {
+window.addEventListener('click', function (event) {
     if (event.target === modal) {
         modal.style.display = 'none';
         modalVideo.pause(); // Pausar el video al cerrar el modal
@@ -499,7 +499,156 @@ function updateHangmanText() {
 }
 
 function generateRandomWord() {
-    const words = ["sol", "diferente amistades"];
+    const words = ["sol", "diferente amistades", "the advengers", "el cisne Negro", "la teniente rada", "harry potter", "transformers", "max game",
+        "chuky", "octubre rojo", "sega saturn", "lobezno y deadpool", "counter striker", "el alquimista", "cronicas de pasion", "el bachero", "el mariachi loco",
+        "estratosfera", "mutante", "x men", "una venganza mortal", "las aguas rebeldes", "donde empieza todo", "la renga", "la veinticinco", "los piojos",
+        "ganas de comerte", "trapito", "pony caballo salvaje", "los cazafantasmas", "jinete sin cabeza", "dia de caza", "geopolitico", "la travesia infernal",
+        "secretos ancestrales", "la gran estafa", "extraterrestres", "contramaestres", "aeroterrestres", "sanguijuela de barrio", "la bella durmiente", "amor ciego",
+        "la mente infinita", "la mansion encantada", "la nueva conciencia", "las mujeres perfectas", "casi un angel", "termostato", "cancion de cuna", "mil noches",
+        "solo un amor", "la ultima estacion", "la quinta estacion", "luz gaggi", "mercado pago", "un solo corazon", "cielo de octubre", "el encargado",
+        "dulce hogar", "supernatural", "hola miguel", "hola moe", "vas a morir", "mira la ventana", "alguien te observa", "detras de ti", "mentiroso",
+        "risas falsas", "el gordo", "el coleccionista", "coleccionista de huesos", "huevos grandes", "la mamila", "hermanos de sangre", "manufacturacion",
+        "los miserables", "mentes brillantes", "mision a martes", "matrix reloaded", "la chimichanga", "olor a ti", "mariposa tecnicolor", "pasos de acero", "gigantes de acero",
+        "fabrica de chocolates", "nomadas del viento", "la enredadera", "nunca fuimos angeles", "apocalipsis", "el gran showman", "el hobbit",
+        "piratas del caribe", "rosa meltrozo", "polar express", "expreso polar", "por siempre jamas", "prefiero el paraiso", "roca tectonica", "sigo como dios",
+        "esta entre nosotros", "smallville", "entre fantasmas", "hombre de famlia", "soy de todas", "todas para mi", "wonder woman", "michael jacson", "aunque te duela",
+        "Idiosincrasia", "Otorrinolaringologo", "Desoxirribonucleico", "Paralelepipedo", "mas cuarenta", "max treinta", "Ovoviviparo", "Caleidoscopio", "Electroencefalografista",
+        "Transustanciacion", "Hipopotomonstrosesquipedaliofobia", "pneumonoultramicroscopicsilicovolcanoconiosis", "Esternocleidomastoideo", "Parangaricutirimicuaro",
+        "Dimetilnitrosamina", "Hexakosioihexekontahexafobia", "fluorescente", "El gran Gatsby", "La casa blanca", "Como agua chocolate", "intoxicado",
+        "el ultimo deseo", "el libro perdido", "El corazon helado", "todo es posible", "la vida secreta", "la bicicleta", "despacito", "vivir mi vida",
+        "te encontrare", "rayando el sol", "soy tu turrito", "leer es importante", "la familia primero", "soy tu turrita", "seras castigada", "la sangre tira",
+        "dejala que vuelva", "si tu supieras", "cuando te vea", "el maximo lider", "luna de miel", "conocimiento es poder", "tus labios rojos",
+        "cafè expreso", "ciencia ficcion", "cuentos fabulosos", "demonio infernal", "deporte agresivo", "desayuno", "desflorar", "detectar", "detestar",
+        "diabetes", "diacritico", "dialelo", "dicha", "dilapidar", "dinamita", "dinero fácil", "diploma", "discipulo mio", "disco rigido", "discordar",
+        "discrepar", "disculpa aceptada", "dispepsia", "dolar blue", "dromedario", "druida", "duda", "duelo mortal", "duende verde", "duodeno",
+        "eclipse solar", "economia global", "Ecuador", "electricidad", "elefante", "esmoquin", "elegante", "elenco", "eliminar", "elipse", "elite",
+        "elixir", "emocion incontenible", "empatar", "empatia", "emperifollado", "encerrar", "endriago", "energumeno", "enero caluroso", "enjuagar",
+        "ensayo musical", "entretenimiento colectivo", "entrevero", "epanadiplosis", "epiceno", "epidemia mundial", "epigrama", "eponimo", "equidna",
+        "equinoccio", "erario", "eritrocito", "erótico", "esbirro", "mansion escabrosa", "escafoides", "escamoles", "escamotear", "escaparate", "escarabajo",
+        "bruja escarlata", "escatologia", "esceptico", "escorbuto", "escribir novelas", "esfenoides", "esguince", "pintura esmaltada", "espejo rectangular",
+        "espía britanico", "esplan", "estafar", "estantigua", "esteatosis", "esteganalisis", "esteril", "cirujia estetica", "estilo", "estimulo",
+        "estocastico", "filosofia estoica", "estraperlo", "estratosfera", "eufemismo", "exorcismo", "paisaje exotico", "expedicion Robinson",
+        "explicar", "exquisito", "extranjero", "faeton", "billete falso", "faquir", "el faro", "farsante", "fascismo", "favela", "febrero", "feijoada",
+        "feretro egipcio", "fetiche", "fettuccine", "fideos largos", "filatelia", "filipica", "filologia", "fiscal", "fisco", "fisgar", "flamenco",
+        "flecha rota", "flema", "foco multifuncional", "folclore argento", "foliculo", "foxtrot uno", "fracaso profesional", "franela", "friso",
+        "fuente milagrosa", "fuga carcelaria", "fundibulo", "furia sangrienta", "fusil", "gabinete presidencial", "gaceta", "galibo", "gallo dorado",
+        "gama media", "ganas dinero", "garaje", "garantia", "error garrafal", "garrapata", "gastronomia vegetariana", "gazapo", "gendarme",
+        "genetica animal", "genio artesanal", "geografia", "geranio", "gerenuc", "gitano", "gnomico", "gorila blanco", "gospel", "granate lanus", "gringo",
+        "gripe", "grito", "grulla", "guardia medica", "Guatemala", "guillotina", "guiri", "habeas corpus", "hafefobia", "halloween", "hambre",
+        "hamburguesa completa", "hapax", "hebilla", "helio", "hemorragia intestinal", "superheroe", "herpes", "hervir arroz", "hibrido", "higado",
+        "higiene", "hipocoristico", "hipocresia", "hipopotamo", "hisopo", "hito", "hocico", "hoguera", "honor", "hostia", "humus magico", "huri",
+        "iconoclasta", "idilio", "idolo maradona", "iglesia catolica", "ilusion optica", "imprenta clarin", "impresionismo", "inaugurar establecimiento",
+        "inconsutil", "incunable", "indigena americano", "indigo", "inexorable", "hermosa infancia", "infarto cardiaco", "influenza", "infulas",
+        "inmolar", "inmunidad congenita", "persona inocente", "inquilino", "insigne", "instinto animal", "no insultar", "intuicion femenina",
+        "investigar profundamente", "Islas Malvinas", "pie izquierdo", "jabali salvaje", "jabon liquido", "jamon natural", "jaqueca dolorosa",
+        "jardin", "jengibre", "jeringa larga", "jinete nocturno", "jitanjafora", "jovial", "judio", "juego mental", "junio largo",
+        "kermes mensual", "kiosco veinticuatro", "laberinto infinito", "ladron espiritual", "lagarto juancho", "latinoamericano",
+        "lechuga criolla", "guerrero legendario", "soy leyenda", "libelula voladora", "libertinaje juvenil", "libreto musical",
+        "libro terrorifico", "frontera limitrofe", "linchar", "litera", "llama ardiente", "llorar impulsivamente", "lona gruesa",
+        "la lonja", "lote gigante", "loteria nacional", "lubrican todo", "rey Lucifer", "lujuria divina", "luna roja", "lupanar",
+        "luto", "animal macabro", "madrugar", "color magenta", "magnetismo", "magnolia", "rey mago", "mago capria", "maguey",
+        "perro malandrin", "malaria", "maleta gris", "malta", "tigre malvado", "nuestras Malvinas", "alto mambo", "mameluco",
+        "mandinga", "mandioca", "manglar", "maniqui", "mano larga", "maqueta", "maquina inoxidable", "margarita", "marihuana",
+        "marioneta", "mariposa tecnicolor", "mariscal", "marmota", "marrano", "martir", "marzo", "masacre sangrienta", "mascara rara",
+        "masoneria africana", "masoquismo grupal", "mastectomia", "no matar", "matricula vehicular", "mayeutica", "mayo", "mayolica",
+        "mayonesa danica", "la mazmorra", "mazurca", "meandro", "medico traumatologo", "medula osea", "mefitico", "mejilla derecha",
+        "noche melancolica", "melena extravagante", "melodia infinita", "membrillo", "menaje corporal", "mensaje subliminal",
+        "mente traviesa", "mentir envejece", "mentor complicado", "mequetrefe", "mercado central", "planeta mercurio", "merengue suizo",
+        "merienda", "metafora clasica", "pegaso meteoro", "meteorito Akbarpur", "Mexico hijo", "miel dulce", "milagro angelical",
+        "milonga argentina", "mimo espiritual", "miniatura", "ministro economico", "misa religiosa", "misterio resuelto",
+        "mitridatismo", "mojigato", "mondongo parrillero", "moneda asiatica", "monegasco", "monzon luis", "moraleja",
+        "moreton fisico", "morfina", "morganatico", "morgue judicial", "un morlaco", "mosquetero imperial", "mucamita",
+        "muelle Piedrabuena", "mujer diabolica", "mula viajera", "museo nacional", "narcisismo", "narcotrafico", "navaja afilada",
+        "Navidad", "nazi Hitler", "humano nefasto", "nefelibata", "negacionismo", "negocio empresarial", "neurona", "nicotina",
+        "nigromancia", "noche espeluznante", "nomada", "ultima noticia", "novela noventera", "nudo gordiano",
+        "imagenes obscenas", "obstetricia", "obtuso", "oceano pacifico", "octubre rojo", "oficio judicial", "ogro Shrek",
+        "oleaginoso", "oleoducto", "olfato canino", "olimpiada mundial", "recuerdos olvidados", "ombligo", "omnibus",
+        "pokemon onix", "onomatopeya", "opio", "momento oportuno", "optimismo", "Optimus Prime", "oraculo sagrado",
+        "orangutan salvaje", "orgia grupal", "origen natural", "orin", "ornitorrinco", "oropendola", "orquidea violeta",
+        "ostracismo", "ovacion general", "paella", "persona pagana", "pagina amarillas", "palacios Exequiel", "paladio",
+        "panfleto oficial", "panic show", "panorama ambiental", "pantagruelico", "pantalon corto", "panteon familiar",
+        "Papa Noel", "papiro", "parafina", "paraiso demoniaco", "mundo paralelo", "paramecio", "parangon", "multiverso",
+        "paranoia cerebral", "parasito extraterrestre", "pariente lejano", "paroxismo", "piso parquet", "partitura musical",
+        "Pascua", "pasionaria hierba", "pasteurizacion", "payaso asesino", "paz mundial", "pedazo gigante", "pegar onda",
+        "pelicula dramatica", "pendulo loco", "pera podrida", "percance personal", "perdiz", "periodo menstrual", "peripecia",
+        "tibia perone", "perpetrar hecho", "persona extravagante", "perspectiva isometrica", "petroleo venezolano", "piano Casio",
+        "picaro ancestral", "pigmento descolorido", "pincel poderoso", "pintar magicamente", "pinzon", "piquete", "pirámide egipcia",
+        "piropo hermoso", "piscina publica", "pistón roto", "pizza especial", "placenta", "plagio escenico", "planeta Neptuno",
+        "plastico transparente", "plutocracia", "polemica", "polimatia", "polipo", "politica sucia", "Polonia cuarta", "pomada negra",
+        "pompa grande", "ponche frutal", "mayor pontífice", "jovenes pordioseros", "porro colombiano", "postergar casamiento", "potasio",
+        "preferí vivir", "profesor prestigioso", "procrastinar", "programar sistemas", "el proletario", "propoleo", "protocolo eugin",
+        "proxeneta", "psicología barata", "reaccion psicosomatica", "pterodactilo", "puerperio", "pupitre", "color púrpura", "quark",
+        "quimera", "quintaesencia", "quiropraxia", "radar ruso", "radio mega", "raiz profunda", "ramera negra", "ramera turquesa",
+        "rancho viejo", "rapsodia", "raza", "rebuznar", "recalcitrante", "recluso", "record guiness", "reloj rolex", "remoto", "remuneracion",
+        "reservar", "resiliencia", "restaurante", "retaliacion", "reticencia", "retorica", "retruecano", "rey", "rezar", "rifirrafe", "rima",
+        "ritalina", "robar", "robot", "rococo", "rosario", "rotiseria", "rubeola", "rubrica", "rueca", "rueda", "ruleta", "rupestre", "rupia",
+        "sagrado", "sainete", "salamandra", "salario", "samba", "San Cristobal", "sandia", "sandwich", "santabarbara", "sarao", "sarcasmo",
+        "sartorio", "satelite lunar", "saxofono", "secuestrar personas", "sedan gris", "seguridad maxima", "semana santa", "semantica pura",
+        "septiembre lluvioso", "ser extrasensorial", "serpentina", "seudonimo", "sexagesimal", "sibarita", "sibilino", "sicalipsis",
+        "sicario", "siesta", "sifilis", "silencio", "sílfide", "silueta", "simonia", "sinalefa", "siniestro", "sirena", "sismo",
+        "sodomia", "sofisticado", "sofocar", "solidaridad", "solsticio", "sororidad", "sosia", "subasta", "suricata", "tabaco",
+        "taberna", "tafetan", "tahona", "talento", "tamarindo", "tandem", "tanga roja", "tantalio", "tarjeta visa", "tartufo",
+        "tatuaje luminoso", "tautologia", "taxidermia", "taximetro", "telo refugio", "temprano", "tenis", "terrorismo arabe",
+        "tertulia", "testarudo", "testigo vital", "tifon", "tilde doble", "tilo", "timpano", "tinnitus", "tiovivo", "tiquismiquis",
+        "tirabuzon", "tiroides", "titan", "titere", "toalla", "tocayo", "tomate", "topacio", "que toronja", "torpedo", "tos convulsa",
+        "totem crash", "trabajo peligroso", "tragedia aereoportuaria", "tramite online", "tramoya", "trapecio", "trapiche",
+        "traqueotomia computada", "tregua", "triaje", "tribu canival", "trifulca generalizada", "tripa higado", "triunfo",
+        "trocanter", "troglodita", "trombocito", "tuna", "tusivi", "tutia", "ufanar", "ultracorreccion", "vieja urraca",
+        "vacuna covid", "Valladolid", "vampiro nocturno", "vanguardia", "vasallo", "vaselina", "vecino chusma", "vedete",
+        "vehículo blindado", "veneno puro", "venir", "ventrilocuo", "verbena", "vereda", "veredicto", "verguenza", "vermicelli",
+        "veronal", "veto", "viandante", "sin viatico", "vicario", "victoria castellot", "villancico", "villano favorito",
+        "vinilo", "vino tinto", "violencia domestica", "violeta valentina", "violin", "virus contagioso", "visa dabito",
+        "vitamina b", "vitolfilia", "vituperar", "viuda negra", "vocacion natural", "vodevil", "volcan Krakatoa.",
+        "vudu vicepresidente", "whisky cuervo", "yanqui", "yate", "yelmo", "yerno", "yoga", "yugular", "zafarrancho", "zahon",
+        "zalamero barrial", "zanahoria", "zar", "zonzo", "zurdo", "chamba", "pisto", "soy chevere", "jato", "alta fiaca",
+        "guagua", "pana", "chido", "bicho", "pibe raro", "mona lisa", "cucho", "morra", "plata facil", "sapo", "cleta", "nene",
+        "tia dolores", "flete manuel", "bien bacan", "barrio budge", "pucha", "guapo", "cumbia", "hijole", "patojo",
+        "cuate", "fiesta", "tamal", "churro", "bocado", "salsa", "che guevara", "palta verde", "bombon asesino", "torta crema",
+        "bacalao", "tinto vino", "la yapa", "ruca", "empanada frita", "chisme", "pipi", "macho meno", "perra salvaje",
+        "teniente rada", "punto seguido", "sabroso no", "mola mucho", "rato", "tio esutaquio", "carro rojo", "poncho",
+        "cuero negro", "merienda", "parrillada", "suave", "carne podrida", "bocadillo", "panal", "chiclero", "tiburon",
+        "fresa", "pesca intensa", "diez kilos", "silla alta", "ceniza", "loro brasilero", "paquete grandote", "boca sucia",
+        "pantalon", "manta", "tierra inospita", "mujer desquisada", "espejo magico", "dientes", "agujero negro",
+        "camisa colorada", "bolsa negra", "sombrero magico", "chaman", "calle trece", "movil celular", "sabor amargo",
+        "verde fluorecente", "agua termal", "luna sangrienta", "nube voladora", "sol", "cielo raso", "fuego", "miel",
+        "raíz arbol", "flores tulipan", "piedrabuena", "arena movediza", "futbol libre", "equipo ", "estadio bernabeu",
+        "medicina laboral", "doctor strenger", "enfermera hot", "clinica privada", "hospital carriquiborde", "receta casera",
+        "pastilla tramadol", "jarabe ibupirqac", "dosis mortal", "cita aciegas", "paciente traumatologico",
+        "síntoma premenstrual", "diagnostico grave", "tratamiento ginecologico", "cuerpo", "salud temporal", "pelo risado",
+        "ojos verdes", "boca grande", "nariz grande", "oreja puntiaguda", "dedo morcilla", "pie plano", "manos grandes",
+        "brazo lasrgos", "pierna corta", "rodilla rota", "codo cortado", "cuello desgarrado", "espalda torsida",
+        "pecho peludo", "estomago", "corazon valiente", "cabeza fria", "hombros ovalados", "tobillo esguinzado",
+        "frente grande", "barba negra", "bigote", "cepillada", "crema humrectante", "jabon desengrasante", "champu anticaspa",
+        "pasta dental", "toallita femenina", "ropa interior", "camisa negra", "falda corta", "chaqueta", "abrigo",
+        "zapato gamuzado", "sandalia", "botin", "bufanda tejida", "guante blanco", "cinturon", "calzon largo", "sujetador",
+        "calcetin", "manga japones", "blusa corta", "chaleco antibalas", "abandonar perdedor", "abogado judicial",
+        "abrir cofre", "aceptar todo", "acercar lineas", "acuerdo laboral", "adivinar palabras", "afirmar testimonios",
+        "analisis contemporaneo", "anotar goles", "aplicar habilidades", "aprender  habilidades", "apuntar arma",
+        "arreglar hinodoro", "bailar cumbia", "banco provincia", "beber wisky", "buscar padres", "calificar notas",
+        "cambiar modales", "campo deportivo", "cantar cuarteto", "caso cabezas", "clase teorica", "cerrar negocio",
+        "comer milanesas", "comprar dolares", "correr siempre", "crear arte", "crédito personal", "cultivar marihuana",
+        "dar recibir", "decidircumplidos", "dedicar poemas", "demostrar afecto", "deportes mentales", "descubrir america",
+        "diferente amistades", "dormir morir", "duro grande", "educar combatir", "escribir libros", "esperar amor",
+        "estudiar personas", "facilitar ayuda", "feliz navidad", "finalizar compra", "formar familia", "futuro cercano",
+        "ganar inero", "generar dinero", "gestionar ingresos", "girar ruleta", "gobierno capitalista",
+        "grandes coorporaciones", "gritar fuerte", "hacer pizza", "historia argentina", "informar noticias",
+        "iniciar programa", "jugar ahorcado", "llegar arcas", "llevar cerveza", "luchar vivir", "manejar vehiculo", "mejorar personalidad", 
+        "navegar siempre", "ocupar corazones", "ofrecer ayuda", "organizar fiestas", "pagar impuestos", "pedir aumento", "pensar solo", 
+        "perder nunca", "permitir acceso", "preguntar inquietudes", "preparar cena", "probar volver", "proteger familia", "reducir gastos", 
+        "resolver ahorcado", "resultar ganador", "revisar ortografia", "saber quimica", "sentir calor", "vender casas", "viajar solo", 
+        "vivir juntos", "zambullir", "zapato roto", "adaptar sobrevivir", "encontrarpareja", "enviar mensajes", "escribir notas", 
+        "estudiar matematicas", "formar grupos", "volar", "rapsodia", "raza alienigena", "rebuznar", "recalcitrante", "recluso peligroso",
+         "control remoto", "remuneracion", "reservar meza", "resiliencia", "restaurante", "retaliacion", "reticencia", "oracion retorica", 
+         "retruecano", "rifirrafe", "robar oro", "yo robot", "rotisería max", "rubeola", "rubia hermosa", "sagrado corazon", "salamandra", 
+         "salario mensual", "sandía dulce", "sicario suelto", "siesta santiabgueña", "sífilis", "siniestro vehicular", "la sirenita", 
+         "hombre sofisticado", "sofocar", "solidaridad plena", "solsticio", "subasta oculta", "suricata", "tabaco colombiano", "taberna moe",
+          "talento argentino", "tamarindo naranja", "tanga blanca", "tarjeta mastercard", "terrorismo japones", "testarudo boton",
+           "fideos tirabuzón", "tiroides", "titere asesino", "tomaco", "traqueotomia", "operación triunfo", "ultracorrección ortografica", 
+           "vacuna tetanos", "vaselina trasera", "vecino miron", "ventrílocuo", "maria victoria", "villancico", "vino blanco",
+            "violencia domestica", "violeta valentina", "vitamina zinc", "vocación innegable", "yanqui careta", "yate lujoso", "zalamero mujeriego",
+             "zanahoria grandota"
+
+    ];
     const randomIndex = Math.floor(Math.random() * words.length);
     return words[randomIndex];
 }
@@ -554,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (startVideoButton && introVideo) {
         startVideoButton.addEventListener('click', (event) => {
             event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
-            
+
             // Detener el video y el sonido
             introVideo.pause();
             introVideo.currentTime = 0; // Opcional: Reiniciar el video al inicio

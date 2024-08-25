@@ -60,7 +60,7 @@ button {
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    margin: 10px;
+    margin: 12px;
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
@@ -605,7 +605,7 @@ button:active {
 /* Estilo del campo de entrada de texto */
 #word-input {
     text-align: center;
-    font-size: 8.8px;
+    font-size: 8.2px;
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
