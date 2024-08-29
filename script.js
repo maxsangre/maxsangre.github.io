@@ -1,6 +1,5 @@
 
 
-
 // Asegúrate de que canvas-confetti se carga correctamente
 if (typeof window.confetti === 'undefined') {
     console.error("Canvas-confetti no se ha cargado correctamente.");
@@ -56,7 +55,7 @@ const hangmanStages = [
     `
      +-----+
      |     |
-     O     |
+                                         O     |           TE QUEDAN 5 OPORTUNIDADES
            |
            |
            |
@@ -65,7 +64,7 @@ const hangmanStages = [
     `
      +-----+
      |     |
-     O     |
+                                               O     |         MMMM... TE QUEDAN 4 OPORTUNIDADES
      |     |
            |
            |
@@ -74,7 +73,7 @@ const hangmanStages = [
     `
      +-----+
      |     |
-     O     |
+                                                                  O     |        OJO...  TE QUEDAN 3 OPORTUNIDADES                                           
     /|     |
            |
            |
@@ -83,7 +82,7 @@ const hangmanStages = [
     `
      +-----+
      |     |
-     O     |
+                                                           O     |         PERO NO LEESSSS... TE QUEDAN 2 OPORTUNIDADES 
     /|\\    |
            |
            |
@@ -92,9 +91,9 @@ const hangmanStages = [
     `
      +-----+
      |     |
-     O     |
-    /|\\    |
-    /      |
+                                                       O     |         DONDE APRENDISTE A DELETREAR PALABRAS... 
+                                          /|\\    |              TE QUEDA 1 OPORTUNIDAD  
+                                                    /      |         Y NO DIGAS QUE NUNCA TE AVISE.. CHAU!!!
            |
     =========
     `,
@@ -112,14 +111,16 @@ const hangmanStages = [
 let selectedWord = '';
 let guessedLetters = [];
 let attempts = 0;
+let score = 0; // Inicializa el contador de puntuación
 
 // Crear objetos de Audio para los sonidos
 const clickSound = new Audio('Sonido/inicio1.mp3');
-const restartSound = new Audio('Sonido/big-button-129050.mp3');
+const restartSound = new Audio('Sonido/big-button-129054.mp3');
 const keySound = new Audio('Sonido/beep-6-96243.mp3');
 const backgroundSound = new Audio('Sonido/opcion7.mp3'); // Sonido de fondo
 const winSound = new Audio('Sonido/urban2.mp4'); // Sonido de victoria
-const loseSound = new Audio('Sonido/risa-de-chucky-25744.mp3'); // Sonido de derrota
+const loseSound = new Audio('Sonido/0830.mp3'); // Sonido de derrota
+const restartSound2 = new Audio('Sonido/big-button-129050.mp3');
 
 // Obtener elementos del DOM para la ventana modal
 const modal = document.getElementById("myModal");
@@ -135,16 +136,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const soundToggleButton = document.getElementById('sound-toggle-btn');
     const restartButton2 = document.getElementById('restart-btn2');
     const introVideo = document.getElementById('intro-video');
+    const randomBtn = document.getElementById('random-btn');
 
-    if (startButton && restartButton && wordInput && soundToggleButton) {
+    // Cargar el puntaje guardado
+    score = loadScore();
+    document.getElementById('score').textContent = 'Victorias: ' + score;
+
+
+    if (startButton && restartButton && wordInput && soundToggleButton && randomBtn) {
         startButton.addEventListener('click', () => {
             playClickSound(); // Reproducir sonido al hacer clic en el botón de iniciar
             initializeGame();
         });
+
         restartButton.addEventListener('click', () => {
             playRestartSound(); // Reproducir sonido al hacer clic en el botón de reinicio
             resetGame();
         });
+
         if (restartButton2) {
             restartButton2.addEventListener('click', () => {
                 resetGame(); // Llamar a la función para reiniciar el juego
@@ -171,6 +180,16 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.error('No se encontró el elemento del video.');
         }
+
+        // Manejo del botón "Random"
+        randomBtn.addEventListener('click', function () {
+            this.classList.add('button-active');
+            wordInput.classList.add('input-active');/*me permite bloquear imput y poner color*/
+
+            const randomWord = generateRandomWord();
+            wordInput.value = randomWord;
+            wordInput.disabled = true; // Deshabilitar el campo de entrada después de generar una palabra aleatoria
+        });
     } else {
         console.error('No se encontraron algunos de los botones o el campo de entrada.');
     }
@@ -234,7 +253,7 @@ function initializeGame() {
     if (!isValidWord(selectedWord)) {
         const warningMessage = document.getElementById('warning-message');
         if (warningMessage) {
-            warningMessage.textContent = 'Por favor, ingresa de una a tres palabras (sin números ni símbolos)';
+            warningMessage.textContent = 'Por favor, ingresa palabras sin símbolos';
             warningMessage.style.display = 'block'; // Mostrar el mensaje de advertencia
         }
         return;
@@ -275,7 +294,7 @@ function initializeGame() {
 function isValidWord(word) {
     // Acepta solo palabras sin números ni símbolos
     const regex = /^[A-Z\s]+$/; // Solo letras y espacios
-    return regex.test(word) && word.split(' ').length <= 3; // Permitir una o dos palabras
+    return regex.test(word) && word.split(' ').length <= 93; // Permitir una o dos palabras
 }
 
 function resetGame() {
@@ -299,6 +318,7 @@ function resetGame() {
     if (wordInput) {
         wordInput.value = '';
         wordInput.style.display = 'inline'; // Mostrar el campo de entrada
+        wordInput.disabled = false; // Habilitar el campo de entrada
     }
 
     document.getElementById('restart-btn').style.display = 'none'; // Ocultar el botón de reinicio
@@ -394,6 +414,12 @@ function showWinningMessage() {
 
         playWinSound(); // Reproducir sonido de victoria en bucle
         showModal('win'); // Mostrar el modal de victoria
+
+        score += 30;
+        document.getElementById('score').textContent = 'Victorias: ' + score;
+        saveScore(); // Guardar el puntaje en localStorage
+
+        showModal('win'); // Mostrar el modal de victoria
     }
 }
 
@@ -413,6 +439,12 @@ function showLosingMessage() {
 
         playLoseSound(); // Reproducir sonido de derrota en bucle
         showModal('lose'); // Mostrar el modal de derrota
+
+        score -= 30;
+        document.getElementById('score').textContent = 'Victorias: ' + score;
+        saveScore(); // Guardar el puntaje en localStorage
+
+        showModal('lose'); // Mostrar el modal de derrota
     }
 }
 
@@ -425,7 +457,7 @@ function showModal(result) {
         modalMessage.textContent = '¡Felicidades, ganaste!';
         playWinSound(); // Reproducir el sonido de victoria en bucle
     } else if (result === 'lose') {
-        modalVideo.src = 'video/perderc.mp4'; // Ruta al video de derrota
+        modalVideo.src = 'video/CASTELLANO2.mp4'; // Ruta al video de derrota
         modalMessage.textContent = ' Inténtalo Nuevamente.';
         playLoseSound(); // Reproducir el sonido de derrota en bucle
     }
@@ -499,7 +531,8 @@ function updateHangmanText() {
 }
 
 function generateRandomWord() {
-    const words = ["sol", "diferente amistades", "the advengers", "el cisne Negro", "la teniente rada", "harry potter", "transformers", "max game",
+    const words = ["sol", "zalamero mujeriego",
+        "yate lujoso", "zanahoria grandota", "diferente amistades", "the advengers", "el cisne Negro", "la teniente rada", "harry potter", "transformers", "max game",
         "chuky", "octubre rojo", "sega saturn", "lobezno y deadpool", "counter striker", "el alquimista", "cronicas de pasion", "el bachero", "el mariachi loco",
         "estratosfera", "mutante", "x men", "una venganza mortal", "las aguas rebeldes", "donde empieza todo", "la renga", "la veinticinco", "los piojos",
         "ganas de comerte", "trapito", "pony caballo salvaje", "los cazafantasmas", "jinete sin cabeza", "dia de caza", "geopolitico", "la travesia infernal",
@@ -632,21 +665,21 @@ function generateRandomWord() {
         "estudiar personas", "facilitar ayuda", "feliz navidad", "finalizar compra", "formar familia", "futuro cercano",
         "ganar inero", "generar dinero", "gestionar ingresos", "girar ruleta", "gobierno capitalista",
         "grandes coorporaciones", "gritar fuerte", "hacer pizza", "historia argentina", "informar noticias",
-        "iniciar programa", "jugar ahorcado", "llegar arcas", "llevar cerveza", "luchar vivir", "manejar vehiculo", "mejorar personalidad", 
-        "navegar siempre", "ocupar corazones", "ofrecer ayuda", "organizar fiestas", "pagar impuestos", "pedir aumento", "pensar solo", 
-        "perder nunca", "permitir acceso", "preguntar inquietudes", "preparar cena", "probar volver", "proteger familia", "reducir gastos", 
-        "resolver ahorcado", "resultar ganador", "revisar ortografia", "saber quimica", "sentir calor", "vender casas", "viajar solo", 
-        "vivir juntos", "zambullir", "zapato roto", "adaptar sobrevivir", "encontrarpareja", "enviar mensajes", "escribir notas", 
+        "iniciar programa", "jugar ahorcado", "llegar arcas", "llevar cerveza", "luchar vivir", "manejar vehiculo", "mejorar personalidad",
+        "navegar siempre", "ocupar corazones", "ofrecer ayuda", "organizar fiestas", "pagar impuestos", "pedir aumento", "pensar solo",
+        "perder nunca", "permitir acceso", "preguntar inquietudes", "preparar cena", "probar volver", "proteger familia", "reducir gastos",
+        "resolver ahorcado", "resultar ganador", "revisar ortografia", "saber quimica", "sentir calor", "vender casas", "viajar solo",
+        "vivir juntos", "zambullir", "zapato roto", "adaptar sobrevivir", "encontrarpareja", "enviar mensajes", "escribir notas",
         "estudiar matematicas", "formar grupos", "volar", "rapsodia", "raza alienigena", "rebuznar", "recalcitrante", "recluso peligroso",
-         "control remoto", "remuneracion", "reservar meza", "resiliencia", "restaurante", "retaliacion", "reticencia", "oracion retorica", 
-         "retruecano", "rifirrafe", "robar oro", "yo robot", "rotisería max", "rubeola", "rubia hermosa", "sagrado corazon", "salamandra", 
-         "salario mensual", "sandía dulce", "sicario suelto", "siesta santiabgueña", "sífilis", "siniestro vehicular", "la sirenita", 
-         "hombre sofisticado", "sofocar", "solidaridad plena", "solsticio", "subasta oculta", "suricata", "tabaco colombiano", "taberna moe",
-          "talento argentino", "tamarindo naranja", "tanga blanca", "tarjeta mastercard", "terrorismo japones", "testarudo boton",
-           "fideos tirabuzón", "tiroides", "titere asesino", "tomaco", "traqueotomia", "operación triunfo", "ultracorrección ortografica", 
-           "vacuna tetanos", "vaselina trasera", "vecino miron", "ventrílocuo", "maria victoria", "villancico", "vino blanco",
-            "violencia domestica", "violeta valentina", "vitamina zinc", "vocación innegable", "yanqui careta", "yate lujoso", "zalamero mujeriego",
-             "zanahoria grandota"
+        "control remoto", "remuneracion", "reservar meza", "resiliencia", "restaurante", "retaliacion", "reticencia", "oracion retorica",
+        "retruecano", "rifirrafe", "robar oro", "yo robot", "rotisería max", "rubeola", "rubia hermosa", "sagrado corazon", "salamandra",
+        "salario mensual", "sandía dulce", "sicario suelto", "siesta santiabgueña", "sífilis", "siniestro vehicular", "la sirenita",
+        "hombre sofisticado", "sofocar", "solidaridad plena", "solsticio", "subasta oculta", "suricata", "tabaco colombiano", "taberna moe",
+        "talento argentino", "tamarindo naranja", "tanga blanca", "tarjeta mastercard", "terrorismo japones", "testarudo boton",
+        "fideos tirabuzón", "tiroides", "titere asesino", "tomaco", "traqueotomia", "operación triunfo", "ultracorrección ortografica",
+        "vacuna tetanos", "vaselina trasera", "vecino miron", "ventrílocuo", "maria victoria", "villancico", "vino blanco",
+        "violencia domestica", "violeta valentina", "vitamina zinc", "vocación innegable", "yanqui careta"
+
 
     ];
     const randomIndex = Math.floor(Math.random() * words.length);
@@ -672,13 +705,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
-
-
-
-
-
-// script.js
 
 document.addEventListener('DOMContentLoaded', function () {
     // Obtener los elementos
@@ -718,3 +744,40 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('No se encontró el botón "Empezar Ya" o el video.');
     }
 });
+function playRestartSound() {
+    restartSound.play().catch(error => {
+        console.error('Error al reproducir el sonido: ', error);
+    });
+}
+
+// Añade el evento de clic al botón
+document.addEventListener('DOMContentLoaded', () => {
+    const restartButton2 = document.getElementById('restart-btn2');
+    if (restartButton2) {
+        restartButton2.addEventListener('click', () => {
+            playRestartSound(); // Reproduce el sonido al hacer clic
+            // Aquí puedes añadir más lógica para reiniciar el juego si es necesario
+        });
+    } else {
+        console.error('No se encontró el botón de reinicio.');
+    }
+});
+
+function saveScore() {
+    localStorage.setItem('score', score);
+}
+
+function loadScore() {
+    const savedScore = localStorage.getItem('score');
+    return savedScore ? parseInt(savedScore, 10) : 0;
+}
+
+
+
+
+
+
+
+
+
+

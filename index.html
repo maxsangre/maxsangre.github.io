@@ -63,13 +63,25 @@
                 <source src="video/carga.mp4" type="video/mp4">
                 Tu navegador no soporta el elemento de video.
             </video>
+            <div class="input-container">
+                <input type="password" id="word-input" placeholder="Ingresa palabras sin simbolos" maxlength="50" autocomplete="off">
+                <div class="tooltip">* Ingresa las palabras que desees que adivinen, sin simbolos, la letra 
+                    "Ñ" sera tomada como simbolo.
+                * Si seleccionas el boton random automaticamente generara una palabra aleatoria,
+            puedes pulsar el boton las veces que desees para cambia dicha palabra, una vez seccionada la palabra, oprime comenzar juego</div>
+            </div>
             <br>
-            <input type="password" id="word-input" placeholder="Ingresa de una a tres palabras (sin números ni símbolos)" maxlength="50" autocomplete="off">
-            <br>
+           
             <br>
             <button id="start-btn">Comenzar Juego</button>
             <button id="random-btn">Palabra Random</button>
+          
+
             <p id="warning-message" class="warning-message"></p> <!-- Mensaje de advertencia -->
+          
+        
+           
+        
         </div>
 
         <!-- Sección del juego -->
@@ -93,9 +105,14 @@
             <div id="word"></div>
             <div id="keyboard"></div>
             <p id="message"></p>
+          
+            <p id="score-container">
+                <img src="imagenes/MONEDAMAX.jpg" alt="Copa" id="trophy-icon" />
+                <span id="score">Victorias: 0</span>
+            </p>
             <div class="button-container">
                 <button id="restart-btn">Reiniciar Juego</button>
-                <button id="sound-toggle-btn">Reproducir Sonido</button>
+                <button id="sound-toggle-btn">Detener Sonido</button>
             </div>
         </div>
 

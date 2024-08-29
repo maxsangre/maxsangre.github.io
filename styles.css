@@ -1,9 +1,4 @@
 
-
-
-
-
-
 /* Importa la fuente desde Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;700&display=swap");
 
@@ -26,7 +21,7 @@ html, body {
 /* Estilos para el contenedor */
 .container {
     text-align: center; /* Centrar el texto dentro del contenedor */
-    background: #0a0a0a; /* Fondo blanco para el contenedor */
+    background: #000000; /* Fondo blanco para el contenedor */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 0 0 10px rgba(186, 29, 29, 0.1); /* Sombra sutil */
     padding: 10px;
@@ -108,7 +103,7 @@ button:active {
     cursor: pointer;
     position:absolute;
     left: 0.1%; /* Alinea el botón al borde izquierdo del contenedor */
-    top: 55%; /* Ajusta la distancia desde el borde superior del contenedor */
+    top: 80%; /* Ajusta la distancia desde el borde superior del contenedor */
     padding: 0.5rem 0.5rem;
     border-radius: 8px; /* Bordes redondeados */
     outline: none;
@@ -166,7 +161,7 @@ button:active {
 }
 
 #modal-video {
-    width: 55%; /* Ocupa todo el ancho del modal */
+    width: 90%; /* Ocupa todo el ancho del modal */
     height: auto; /* Ajusta la altura automáticamente para mantener la relación de aspecto */
     display: block; /* Asegura que el video sea un bloque para ocupar toda el área disponible */
     margin: 0 auto; /* Centra el video horizontalmente */
@@ -801,9 +796,86 @@ button:active {
      box-shadow: 0 0 0 0 rgba(29, 171, 209, 0),  0 0 0 30px rgba(29, 171, 209, 0);
    }
  
- 
 }
 
- 
+ .input-active {
+    background-color: #b3e0ff; /* Color celeste claro */
+    border: 5px solid #3e902b; /* Opcional: Agregar un borde para mayor visibilidad */
+}
+
+#score-container {
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 1.2em;
+    color: #f6efef;
+}
+
+#trophy-icon {
+    width: 44px; /* Tamaño de la imagen de la copa */
+    height: 44px; /* Tamaño de la imagen de la copa */
+    margin-right: 8px; /* Espacio entre la imagen y el texto */
+}
+
+#score {
+    font-weight: bold; /* Hacer el texto del puntaje en negrita */
+}
 
 
+
+
+
+
+
+
+
+
+
+/* Estilos para el contenedor del input y el tooltip */
+.input-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilos para el input */
+#word-input {
+    padding: 8px;
+    font-size: 14px;
+}
+
+/* Estilos para el tooltip */
+.tooltip {
+    visibility: hidden;
+    width: 120px; /* Tamaño reducido del tooltip */
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 5px;
+    padding: 4px 8px; /* Reducción del padding */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Posiciona el tooltip por encima del input */
+    left: 50%; /* Centra el tooltip horizontalmente con respecto al input */
+    transform: translateX(-50%); /* Ajusta la posición horizontal para centrar */
+    opacity: 0;
+    transition: opacity 0.3s, bottom 0.3s; /* Añade transición para el cambio de bottom */
+}
+
+/* Flecha del tooltip */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: -10px; /* Posiciona la flecha justo debajo del tooltip */
+    left: 50%; /* Centra la flecha horizontalmente */
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Muestra el tooltip al pasar el cursor sobre el contenedor del input */
+.input-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
