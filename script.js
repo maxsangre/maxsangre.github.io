@@ -130,7 +130,7 @@ const restartSound = new Audio('Sonido/big-button-129054.mp3');
 const keySound = new Audio('Sonido/beep-6-96243.mp3');
 const backgroundSound = new Audio('Sonido/opcion7.mp3'); // Sonido de fondo
 const winSound = new Audio('Sonido/urban2.mp4'); // Sonido de victoria
-const loseSound = new Audio('Sonido/0830.mp4'); // Sonido de derrota
+const loseSound = new Audio('video/CASTELLANO2.mp4'); // Sonido de derrota
 const restartSound2 = new Audio('Sonido/big-button-129050.mp3');
 
 // Obtener elementos del DOM para la ventana modal
