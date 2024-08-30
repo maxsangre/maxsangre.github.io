@@ -55,47 +55,58 @@ const hangmanStages = [
     `
      +-----+
      |     |
-                                         O     |           TE QUEDAN 5 OPORTUNIDADES
+      O     | 
            |
            |
            |
     =========
+
+    TE QUEDAN 5 OPORTUNIDADES...
     `,
     `
      +-----+
      |     |
-                                               O     |         MMMM... TE QUEDAN 4 OPORTUNIDADES
+      O     | 
      |     |
            |
            |
     =========
+
+    MMMM... TE QUEDAN 4 OPORTUNIDADES.
     `,
     `
      +-----+
      |     |
-                                                                  O     |        OJO...  TE QUEDAN 3 OPORTUNIDADES                                           
+     O     |
     /|     |
            |
            |
     =========
+
+    OJO...  TE QUEDAN 3 OPORTUNIDADES  
     `,
     `
      +-----+
      |     |
-                                                           O     |         PERO NO LEESSSS... TE QUEDAN 2 OPORTUNIDADES 
+     O     |
     /|\\    |
            |
            |
     =========
+   PERO NO LEESSSS... 
+TE QUEDAN 2 OPORTUNIDADES
     `,
     `
      +-----+
      |     |
-                                                       O     |         DONDE APRENDISTE A DELETREAR PALABRAS... 
-                                          /|\\    |              TE QUEDA 1 OPORTUNIDAD  
-                                                    /      |         Y NO DIGAS QUE NUNCA TE AVISE.. CHAU!!!
+     O     |
+    /|\\    |
+    /      |
            |
     =========
+    DONDE APRENDISTE A DELETREAR PALABRAS... 
+     TE QUEDA 1 OPORTUNIDAD 
+    Y NO DIGAS QUE NUNCA TE AVISE.. CHAU!!!
     `,
     `
      +-----+

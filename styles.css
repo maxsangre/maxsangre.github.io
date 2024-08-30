@@ -26,7 +26,7 @@ html, body {
     box-shadow: 0 0 10px rgba(186, 29, 29, 0.1); /* Sombra sutil */
     padding: 10px;
     max-width: 1000px;
-    width: 100%;
+    width: 90%;
     border: 12px solid #ee4f4f; /* Opcional, para un borde alrededor del video */
     border-radius: 18px; /* Opcional, para bordes redondeados */
 }
